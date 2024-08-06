@@ -1,6 +1,5 @@
 import json
 import os
-import pathlib
 
 import airflow.utils.dates
 import requests
@@ -8,7 +7,13 @@ import requests.exceptions as requests_exceptions
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
+import logging
 
+from custom_errors import NoDataError
+
+
+# get the airflow.task logger
+task_logger = logging.getLogger('airflow.task')
 
 dag = DAG(
     dag_id="download_rocket_launches",
@@ -19,7 +24,7 @@ dag = DAG(
 
 download_launches = BashOperator(
     task_id="download_launches",
-    bash_command="curl -o /tmp/launches.json -L 'https://ll.thespacedevs.com/2.0.0/launch/upcoming'", # noqas
+    bash_command="curl -o /tmp/launches.json -L 'https://ll.thespacedevs.com/2.0.0/launch/upcoming'", # noqa
     dag=dag
 )
 
@@ -29,19 +34,29 @@ def _get_pictures():
 
     with open("/tmp/launches.json", "r") as f:
         launches = json.load(f)
-        image_urls = [launch.get["image"] for launch in launches["results"]]
+
+        if len(launches["results"]) > 0:
+            task_logger.info("Data load")
+        else:
+            raise NoDataError("No data found")
+
+        image_urls = [launch.get("image") for launch in launches["results"]]
+
         for image_url in image_urls:
             try:
                 response = requests.get(image_url)
                 image_filename = image_url.split("/")[-1]
                 target_file = f"/tmp/images/{image_filename}"
+
                 with open(target_file, "wb") as f:
                     f.write(response.content)
-                print(f"Downloaded {image_url} to {target_file}")
+                task_logger.info(f"Downloaded {image_url} to {target_file}")
+
             except requests_exceptions.MissingSchema:
-                print(f"{image_url} appears to be an invalid URL.")
+                task_logger.error(f"{image_url} appears to be an invalid URL.")
+
             except requests_exceptions.ConnectionError:
-                print(f"Could not connect to {image_url}.")
+                task_logger.error(f"Could not connect to {image_url}.")
 
 
 get_picture = PythonOperator(
