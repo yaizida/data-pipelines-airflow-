@@ -6,19 +6,25 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 
-"""!!! Внимание сюда !!!"""
+
 dag = DAG(
-    dag_id="01_unscheduled",
-    start_date=dt.datetime(2019, 1, 1),
-    schedule_interval=None,  # если  не указать то умолчанию останется None
+    dag_id="04_query_with_dates",
+    schedule_interval=dt.timedelta(days=3),
+    start_date=dt.datetime(year=2019, month=1, day=1),
+    end_date=dt.datetime(year=2019, month=1, day=5),
     tags=['chapter03'],
 )
+
+"""!!! Внимание сюда !!!"""
 fetch_events = BashOperator(
     task_id="fetch_events",
     bash_command=(
-        "mkdir -p /data && "
-        "curl -o /data/events.json "
-        "https://localhost:5000/events"
+        "mkdir ­p /data && "
+        "curl ­o /data/events.json "
+        "http://localhost:5000/events?"
+        # Отформатированная датта в формате yyyy-mm-dd
+        "start_date={{execution_date.strftime('%Y-%m-%d')}}"
+        "&end_date={{next_execution_date.strftime('%Y-%m-%d')}}"
     ),
     dag=dag,
 )

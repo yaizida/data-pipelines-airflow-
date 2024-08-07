@@ -8,11 +8,12 @@ from airflow.operators.python import PythonOperator
 
 """!!! Внимание сюда !!!"""
 dag = DAG(
-    dag_id="01_unscheduled",
-    start_date=dt.datetime(2019, 1, 1),
-    schedule_interval=None,  # если  не указать то умолчанию останется None
+    dag_id="02_daily_schedule",
+    schedule_interval="@daily",  # Ежедневный запуск в полночь
+    start_date=dt.datetime(2019, 1, 1),  # дата и время запуска задачи
     tags=['chapter03'],
 )
+
 fetch_events = BashOperator(
     task_id="fetch_events",
     bash_command=(

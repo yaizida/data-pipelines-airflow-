@@ -8,9 +8,13 @@ from airflow.operators.python import PythonOperator
 
 """!!! Внимание сюда !!!"""
 dag = DAG(
-    dag_id="01_unscheduled",
-    start_date=dt.datetime(2019, 1, 1),
-    schedule_interval=None,  # если  не указать то умолчанию останется None
+    dag_id="04_time_delta",
+    # Таким образом даг будет запускаться каждые три дня
+    # Если же это будет реализовано через cron, то он запуститься 31 и 1
+    # Что нарушит расписание
+    schedule_interval=dt.timedelta(days=3),
+    start_date=dt.datetime(year=2019, month=1, day=1),
+    end_date=dt.datetime(year=2019, month=1, day=5),
     tags=['chapter03'],
 )
 fetch_events = BashOperator(
