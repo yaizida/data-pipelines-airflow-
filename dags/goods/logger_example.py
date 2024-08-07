@@ -44,7 +44,7 @@ with DAG(dag_id='more_logs_dag',
     commands = """
         touch /usr/local/airflow/{{ds}}.txt
         echo {{ti.xcom_pull(task_ids='extract')}} > /usr/local/airflow/{{ds}}.txt
-        """
+        """ # noqa
 
     write_to_file = BashOperator(task_id='write_to_file', bash_command=commands) # noqa
 

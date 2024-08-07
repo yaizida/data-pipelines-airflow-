@@ -47,7 +47,6 @@ def _get_pictures():
                 response = requests.get(image_url)
                 image_filename = image_url.split("/")[-1]
                 target_file = f"/tmp/images/{image_filename}"
-
                 with open(target_file, "wb") as f:
                     f.write(response.content)
                 task_logger.info(f"Downloaded {image_url} to {target_file}")
@@ -67,7 +66,7 @@ get_picture = PythonOperator(
 
 notify = BashOperator(
     task_id="notify",
-    bash_command="echo 'There are now $(ls /tmp/images/ | wc -l) images.'",
+    bash_command="echo 'There are now $(ls /tmp/images | wc -l) images.'",
     dag=dag
 )
 
