@@ -25,7 +25,9 @@ Base = declarative_base()
 
 
 class StarWars(Base):
+
     __tablename__ = TABLE_NAME
+
     __table_args__ = {'schema': 'test'}
 
     name = Column(String, primary_key=True)
@@ -51,7 +53,7 @@ def fetchswapi():
     def _fetch_swapi():
 
         # Получение данных из API (например, SWAPI)
-        response = requests.get('https://swapi.dev/api/people/4/')
+        response = requests.get('https://swapi.dev/api/people/5/')
 
         if response.status_code != HTTPStatus.OK:
             raise requests.exceptions.RequestException(response.status_code,
