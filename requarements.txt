@@ -40,6 +40,7 @@ cryptography==41.0.7
 Deprecated==1.2.14
 dill==0.3.1.1
 dnspython==2.6.1
+docker==7.1.0
 docutils==0.16
 email_validator==2.2.0
 Flask==2.2.5
@@ -55,6 +56,7 @@ Flask-WTF==1.2.1
 flower==2.0.1
 frozenlist==1.4.1
 fsspec==2023.12.2
+future==1.0.0
 google-re2==1.1.20240702
 googleapis-common-protos==1.63.2
 greenlet==3.0.3
@@ -78,6 +80,7 @@ lazy-object-proxy==1.10.0
 limits==3.13.0
 linkify-it-py==2.0.3
 lockfile==0.12.2
+lxml==5.3.0
 Mako==1.3.5
 markdown-it-py==3.0.0
 MarkupSafe==2.1.5
@@ -89,6 +92,7 @@ mdurl==0.1.2
 methodtools==0.4.7
 more-itertools==10.3.0
 multidict==6.0.5
+nipyapi==0.20.0
 numpy==2.0.1
 opentelemetry-api==1.25.0
 opentelemetry-exporter-otlp==1.25.0
@@ -112,11 +116,13 @@ psutil==6.0.0
 pycparser==2.22
 Pygments==2.18.0
 PyJWT==2.8.0
+PySocks==1.7.1
 python-daemon==3.0.1
 python-dateutil==2.9.0.post0
 python-nvd3==0.16.0
 python-slugify==8.0.4
 pytz==2024.1
+pywin32==306
 PyYAML==6.0.1
 redis==5.0.7
 referencing==0.35.1
@@ -126,6 +132,8 @@ rfc3339-validator==0.1.4
 rich==13.7.1
 rich-argparse==1.5.2
 rpds-py==0.19.0
+ruamel.yaml==0.17.40
+ruamel.yaml.clib==0.2.8
 setproctitle==1.3.3
 setuptools==72.1.0
 six==1.16.0
@@ -152,5 +160,6 @@ Werkzeug==2.2.3
 wirerope==0.4.7
 wrapt==1.16.0
 WTForms==3.1.2
+xmltodict==0.13.0
 yarl==1.9.4
 zipp==3.19.2

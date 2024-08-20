@@ -9,7 +9,7 @@ from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 import logging
 
-from custom_errors import NoDataError
+from config.custom_errors import NoDataError
 
 
 # get the airflow.task logger

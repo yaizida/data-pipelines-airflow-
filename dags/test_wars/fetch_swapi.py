@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from airflow.decorators import dag, task
 from airflow.models import Variable
 
-from custom_errors import InsertError
+from config.custom_errors import InsertError
 
 
 POSTGRES_CONN_ID = 'PostgresBi'
@@ -53,7 +53,7 @@ def fetchswapi():
     def _fetch_swapi():
 
         # Получение данных из API (например, SWAPI)
-        response = requests.get('https://swapi.dev/api/people/5/')
+        response = requests.get('https://swapi.dev/api/people/')
 
         if response.status_code != HTTPStatus.OK:
             raise requests.exceptions.RequestException(response.status_code,
