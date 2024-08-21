@@ -3,13 +3,13 @@ from http import HTTPStatus
 
 import pendulum
 import requests
-from sqlalchemy import Column, Integer, String, create_engine
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from airflow.decorators import dag, task
 from airflow.models import Variable
 
 from config.custom_errors import InsertError
+from test_wars.models import StarWars
 
 
 POSTGRES_CONN_ID = 'PostgresBi'
@@ -20,24 +20,6 @@ session = Session()
 
 # get the airflow.task logger
 task_logger = logging.getLogger('airflow.task')
-
-Base = declarative_base()
-
-
-class StarWars(Base):
-
-    __tablename__ = TABLE_NAME
-
-    __table_args__ = {'schema': 'test'}
-
-    name = Column(String, primary_key=True)
-    height = Column(Integer)
-    mass = Column(Integer)
-    hair_color = Column(String)
-    skin_color = Column(String)
-    eye_color = Column(String)
-    birth_year = Column(String, primary_key=True)
-    gender = Column(String, nullable=False)
 
 
 @dag(

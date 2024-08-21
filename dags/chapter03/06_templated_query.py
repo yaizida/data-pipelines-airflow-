@@ -23,6 +23,8 @@ fetch_events = BashOperator(
         "curl ­o /data/events.json "
         "http://localhost:5000/events?"
         # Отформатированная датта в формате yyyy-mm-dd
+        # Очень удобно при помощи шаблонизатора Jinja можно выставлять
+        # дату выполнения дага - {{execution_date}} в любой из тасок
         "start_date={{execution_date.strftime('%Y-%m-%d')}}"
         "&end_date={{next_execution_date.strftime('%Y-%m-%d')}}"
     ),
